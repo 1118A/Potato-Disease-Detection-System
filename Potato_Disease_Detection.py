@@ -96,9 +96,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+if "app_mode" not in st.session_state:
+    st.session_state.app_mode = "Home"
+
 # Sidebar Content
 st.sidebar.title("🌿 Dashboard")  # Add emoji for better look
-app_mode = st.sidebar.selectbox("📌 Select Page", ["About", "Home", "ChatBox", "Disease Recognition"])
+#app_mode = st.sidebar.selectbox("📌 Select Page", ["About", "Home", "ChatBox", "Disease Recognition"])
+app_mode = st.sidebar.selectbox("📌 Select Page", ["About", "Home", "ChatBox", "Disease Recognition"], index=["About", "Home", "ChatBox", "Disease Recognition"].index(st.session_state["app_mode"]))
+st.session_state["app_mode"] = app_mode  # Sync selection
+
+
 
 
 #Home Page:
@@ -139,6 +146,15 @@ if app_mode == "Home":
     <p>Learn more about the project, our team, and our goals on the <b>About</b> page.</p>
     </div>
     """, unsafe_allow_html=True)
+    st.markdown(""" <br>""",unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("Get Started with Disease Recognition"):
+            st.session_state["app_mode"] = "Disease Recognition"
+            st.rerun()
+
+
 
 #About Project
 elif app_mode == "About":
@@ -172,6 +188,13 @@ elif app_mode == "About":
 
     </div>
     """, unsafe_allow_html=True)
+    st.markdown(""" <br>""",unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("Get Started with Disease Recognition"):
+            st.session_state["app_mode"] = "Disease Recognition"
+            st.rerun()
 
 
 #Prediction Page
